@@ -36,3 +36,16 @@ jobs:
           echo "Image: $IMG"
           docker build -t "$IMG" .
           docker push "$IMG"
+  deploy:
+    needs: publish
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          fingerprint: ${{ secrets.SSH_FINGERPRINT }}
+          script: /opt/api/deploy.sh ${{ github.sha }}
