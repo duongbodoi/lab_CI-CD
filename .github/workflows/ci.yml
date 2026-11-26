@@ -47,5 +47,5 @@ jobs:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.SSH_KEY }}
-          fingerprint: ${{ secrets.SSH_FINGERPRINT }}
+          #fingerprint: ${{ secrets.SSH_FINGERPRINT }}
           script: /opt/api/deploy.sh ${{ github.sha }}
